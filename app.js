@@ -1,10 +1,10 @@
-console.log("Hello!");
+
 
 let titre=document.getElementById('title')
 
 fetch("https://sheltered-wave-91591.herokuapp.com/")
 .then(res => res.json())
-.then(data => titre.innerText=data);
+.then(data => console.log(data));
 
 fetch("https://sheltered-wave-91591.herokuapp.com/api/login", {
     method : "POST",
@@ -24,8 +24,30 @@ function findAllPokemon(token){
         headers: { "Authorization" : `Bearer ${token}`}
     })
     .then( res => res.json())
-    .then( data => console.log(data))
+    .then( data => {
+        console.log(data)
+        let arr=data.data;
+        console.log(arr)
+       arr.forEach(e => addDiv(e.name, e.hp, e.cp, e.types, e.picture))
+    })
 
+}
+function addDiv(name,hp,cp,type,url){
+    let displayResult=document.getElementById('display-result');
+    displayResult.innerHTML+=`
+            <div class="pokemon">
+
+                    <img class="pokemon-picture" src="${url}" alt="">
+                <div class="pokemon-info">
+                    <ul>
+                        <li>Nom: ${name}</li>
+                        <li>Hp: ${hp}</li>
+                        <li>Cp: ${cp}</li>
+                        <li>Type: ${type}</li>
+                    </ul>
+                </div>
+            </div>
+        `
 }
 
 
