@@ -1,7 +1,7 @@
 
 
 let titre=document.getElementById('title')
-
+let token;
 fetch("https://sheltered-wave-91591.herokuapp.com/")
 .then(res => res.json())
 .then(data => console.log(data));
@@ -14,6 +14,7 @@ fetch("https://sheltered-wave-91591.herokuapp.com/api/login", {
 .then( res => res.json())
 .then(data => {
     findAllPokemon(data.token)
+    token=data.token;
     console.log(data)
 })
 
@@ -51,6 +52,17 @@ function addDiv(name,hp,cp,type,url){
 }
 
 
+let inputText=document.getElementById("input-text");
+let inputBtn=document.getElementById("btn-valid");
 
+inputBtn.addEventListener('click',()=>{
+    fetch(`https://sheltered-wave-91591.herokuapp.com/api/pokemons?name=${inputText.value}`,{
+        methods:"GET",
+        headers:{ "Authorization": `Bearer ${token}`}
+    })
+    .then(res => console.log(res.json()))
+    .then( data => console.log(data))
+
+});
 
 
